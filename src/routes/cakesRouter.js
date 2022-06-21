@@ -1,8 +1,8 @@
 import { Router } from "express";
 
-const ordersRouter = Router();
+const cakesRouter = Router();
 
-ordersRouter.get("/", (req, res) => {
+cakesRouter.get("/", (req, res) => {
 	try {
 		res.send("alive");
 	} catch (e) {
@@ -10,4 +10,4 @@ ordersRouter.get("/", (req, res) => {
 	}
 });
 
-export default ordersRouter;
+export default cakesRouter;
