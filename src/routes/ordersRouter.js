@@ -9,5 +9,6 @@ ordersRouter.post(
 	validateSchemaMiddleware(createOrderSchema),
 	ordersController.createOrder
 );
+ordersRouter.get("/orders", ordersController.getAllOrders);
 
 export default ordersRouter;

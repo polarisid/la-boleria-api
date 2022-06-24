@@ -24,4 +24,15 @@ async function createOrder(req, res) {
 	}
 }
 
-export default { createOrder };
+async function getAllOrders(req, res) {
+	try {
+		const orders = await ordersRepository.getAll();
+		res.send(orders.rows);
+	} catch (e) {
+		console.log(e);
+		res.send(500);
+		return;
+	}
+}
+
+export default { createOrder, getAllOrders };
