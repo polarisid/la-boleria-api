@@ -1,4 +1,5 @@
 # la-boleria-api Documentation
+- - Backend e  banco de dados de um gerenciador de pedidos para uma loja de bolos.
 - **POST** `/flavours`
     - Deve receber as informações necessárias para a criação de um novo sabor de bolo.
     
