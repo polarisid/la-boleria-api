@@ -6,6 +6,7 @@ CREATE TABLE "cakes" (
     "image" VARCHAR(255) NOT NULL,
     "description" TEXT NOT NULL,
     "price" NUMERIC NOT NULL
+    "flavourId" INTEGER NOT NULL REFERENCES "flavours"("id"),
 );
 
 CREATE TABLE "clients" (
@@ -22,4 +23,9 @@ CREATE TABLE "orders" (
     "quantity" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	"totalPrice"  NUMERIC NOT NULL
+);
+
+CREATE TABLE "flavours"(
+    id SERIAL NOT NULL PRIMARY KEY,
+    "name" VARCHAR(255) NOT NULL UNIQUE
 );

@@ -1,17 +1,14 @@
 import db from "../database.js";
 
-async function insert(cake) {
+async function insert(name) {
 	try {
 		const queryString = `
-		insert into "cakes" ("name","image","description","price","flavourId") values ($1,$2,$3,$4,$5);
+		insert 
+        into 
+        "flavours" ("name") 
+        values ($1);
 		`;
-		const queryArgs = [
-			cake.name,
-			cake.image,
-			cake.description,
-			cake.price,
-			cake.flavourId,
-		];
+		const queryArgs = [name];
 		const result = await db.query(queryString, queryArgs);
 		return result;
 	} catch (e) {
@@ -23,7 +20,7 @@ async function insert(cake) {
 async function searchByName(name) {
 	try {
 		const queryString = `
-		select * from  "cakes" where name ~*  ($1);
+		select * from  "flavours" where name ~* ($1);
 		`;
 		const queryArgs = [name];
 		const result = await db.query(queryString, queryArgs);
@@ -37,7 +34,7 @@ async function searchByName(name) {
 async function searchById(id) {
 	try {
 		const queryString = `
-		select * from  "cakes" where id = ($1);
+		select * from  "flavours" where id = ($1);
 		`;
 		const queryArgs = [id];
 		const result = await db.query(queryString, queryArgs);
@@ -48,7 +45,7 @@ async function searchById(id) {
 	}
 }
 
-export const cakesRepository = {
+export const flavoursRepository = {
 	insert,
 	searchByName,
 	searchById,

@@ -26,7 +26,7 @@ async function getAll() {
 		const queryString = `
 		select
 			json_build_object('id',c.id,'name',c.name,'address',c.address,'phone',c.phone) as client,
-			json_build_object('id',ca.id,'name',ca.name,'price',ca.price,'description', ca.description, 'image',ca.image) as cake,
+			json_build_object('id',ca.id,'name',ca.name,'price',ca.price,'description', ca.description, 'image',ca.image,'flavour',fl.name) as cake,
 			orders."createdAt",
 			orders.quantity,
 			orders."totalPrice",
@@ -37,6 +37,8 @@ async function getAll() {
 			on  orders."clientId" =c.id 
 		join "cakes" ca
 			on orders."cakeId" = ca.id
+		join "flavours" fl
+			on ca."flavourId" =fl.id
 		;
 		`;
 
@@ -54,7 +56,7 @@ async function getAllByDate(date) {
 		const queryString = `
 		select
 			json_build_object('id',c.id,'name',c.name,'address',c.address,'phone',c.phone) as client,
-			json_build_object('id',ca.id,'name',ca.name,'price',ca.price,'description', ca.description, 'image',ca.image) as cake,
+			json_build_object('id',ca.id,'name',ca.name,'price',ca.price,'description', ca.description, 'image',ca.image,'flavour',fl.name) as cake,
 			orders."createdAt",
 			orders.quantity,
 			orders."totalPrice",
@@ -65,6 +67,8 @@ async function getAllByDate(date) {
 			on  orders."clientId" =c.id 
 		join "cakes" ca
 			on orders."cakeId" = ca.id
+		join "flavours" fl
+			on ca."flavourId" =fl.id
 		where 
 			orders."createdAt" >=($1)
 			AND
@@ -85,7 +89,7 @@ async function getById(id) {
 		const queryString = `
 		select
 			json_build_object('id',c.id,'name',c.name,'address',c.address,'phone',c.phone) as client,
-			json_build_object('id',ca.id,'name',ca.name,'price',ca.price,'description', ca.description, 'image',ca.image) as cake,
+			json_build_object('id',ca.id,'name',ca.name,'price',ca.price,'description', ca.description, 'image',ca.image,'flavour',fl.name) as cake,
 			orders."createdAt",
 			orders.quantity,
 			orders."totalPrice"
@@ -95,6 +99,8 @@ async function getById(id) {
 			on  orders."clientId" =c.id 
 		join "cakes" ca
 			on orders."cakeId" = ca.id
+		join "flavours" fl
+			on ca."flavourId" =fl.id
 		where 
 			orders.id =($1)
 		;
@@ -116,13 +122,16 @@ async function getByUser(userId) {
 			orders.quantity,
 			orders."createdAt",
 			orders."totalPrice",
-			ca.name as "cakeName"
+			ca.name as "cakeName",
+			fl.name as "flavour"
 		from
         	"orders"
 		join "clients" c 
 			on  orders."clientId" =c.id 
 		join "cakes" ca
 			on orders."cakeId" = ca.id
+		join "flavours" fl
+			on ca."flavourId" =fl.id
 		where 
 			c.id =($1)
 		;

@@ -12,8 +12,6 @@ async function createOrder(req, res) {
 			return res.status(404).send("Client or cake not found");
 		}
 
-		console.log(res.locals);
-
 		await ordersRepository.insert(res.locals);
 		return res.sendStatus(201);
 	} catch (e) {
