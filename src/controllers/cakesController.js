@@ -7,9 +7,10 @@ async function createCake(req, res) {
 			return;
 		}
 		await cakesRepository.insert(res.locals);
-		res.status(201).send(res.locals);
+		res.sendStatus(201);
 	} catch (e) {
 		console.log(e);
+		res.send(500);
 		return;
 	}
 }

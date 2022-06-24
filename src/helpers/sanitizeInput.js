@@ -10,7 +10,7 @@ function sanitizeInput(body) {
 
 		return body;
 	} catch (e) {
-		console.log(e);
+		throw e;
 	}
 }
 
