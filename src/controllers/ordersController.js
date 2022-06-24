@@ -27,9 +27,15 @@ async function getAllOrders(req, res) {
 		const queryString = req.query.date;
 		if (queryString) {
 			const orders = await ordersRepository.getAllByDate(queryString);
+			if (orders.rowCount == 0) {
+				return res.sendStatus(404);
+			}
 			return res.json(orders.rows);
 		}
 		const orders = await ordersRepository.getAll();
+		if (orders.rowCount == 0) {
+			return res.sendStatus(404);
+		}
 		return res.json(orders.rows);
 	} catch (e) {
 		console.log(e);
@@ -37,4 +43,19 @@ async function getAllOrders(req, res) {
 	}
 }
 
-export default { createOrder, getAllOrders };
+async function getOrderById(req, res) {
+	const id = req.params.id;
+	console.log(id);
+	try {
+		const order = await ordersRepository.getById(id);
+		if (order.rowCount == 0) {
+			return res.sendStatus(404);
+		}
+		return res.json(order.rows[0]);
+	} catch (e) {
+		console.log(e);
+		return res.sendStatus(500);
+	}
+}
+
+export default { createOrder, getAllOrders, getOrderById };

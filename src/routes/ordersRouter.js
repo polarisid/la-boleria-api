@@ -10,5 +10,6 @@ ordersRouter.post(
 	ordersController.createOrder
 );
 ordersRouter.get("/orders", ordersController.getAllOrders);
+ordersRouter.get("/orders/:id", ordersController.getOrderById);
 
 export default ordersRouter;
