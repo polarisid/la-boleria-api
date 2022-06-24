@@ -45,7 +45,9 @@ async function getAllOrders(req, res) {
 
 async function getOrderById(req, res) {
 	const id = req.params.id;
-	console.log(id);
+	if (!id) {
+		return res.status(422).send("id required");
+	}
 	try {
 		const order = await ordersRepository.getById(id);
 		if (order.rowCount == 0) {
@@ -58,4 +60,22 @@ async function getOrderById(req, res) {
 	}
 }
 
-export default { createOrder, getAllOrders, getOrderById };
+async function getAllOrdersByUser(req, res) {
+	const userId = req.params.id;
+	if (!userId) {
+		return res.status(422).send("id required");
+	}
+	try {
+		const existingClient = await clientsRepository.searchById(userId);
+		if (existingClient.rowCount === 0) {
+			return res.status(404).send("user not found");
+		}
+		const order = await ordersRepository.getByUser(userId);
+		return res.json(order.rows);
+	} catch (e) {
+		console.log(e);
+		return res.sendStatus(500);
+	}
+}
+
+export default { createOrder, getAllOrders, getOrderById, getAllOrdersByUser };

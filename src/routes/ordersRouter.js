@@ -11,5 +11,6 @@ ordersRouter.post(
 );
 ordersRouter.get("/orders", ordersController.getAllOrders);
 ordersRouter.get("/orders/:id", ordersController.getOrderById);
+ordersRouter.get("/clients/:id/orders", ordersController.getAllOrdersByUser);
 
 export default ordersRouter;
