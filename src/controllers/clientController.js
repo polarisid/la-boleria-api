@@ -1,12 +1,12 @@
-import { cakesRepository } from "../repositories/cakesRepository.js";
+import { clientRepository } from "../repositories/clientRepository.js";
 async function createCake(req, res) {
 	try {
-		const existingName = await cakesRepository.searchByName(res.locals.name);
+		const existingName = await clientRepository.searchByName(res.locals.name);
 		if (existingName.rowCount >= 1) {
 			res.status(409).send("name already in database");
 			return;
 		}
-		await cakesRepository.insert(res.locals);
+		await clientRepository.insert(res.locals);
 		res.status(201).send(res.locals);
 	} catch (e) {
 		console.log(e);

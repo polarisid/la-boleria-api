@@ -1,11 +1,11 @@
 import db from "../database.js";
 
-async function insert(cake) {
+async function insert(client) {
 	try {
 		const queryString = `
-		insert into "cakes" ("name","image","description","price") values ($1,$2,$3,$4);
+		insert into "clients" ("name","address","phone") values ($1,$2,$3);
 		`;
-		const queryArgs = [cake.name, cake.image, cake.description, cake.price];
+		const queryArgs = [client.name, client.address, client.phone];
 		console.log(queryArgs);
 		const result = await db.query(queryString, queryArgs);
 		return result;
@@ -14,7 +14,6 @@ async function insert(cake) {
 		return;
 	}
 }
-
 async function searchByName(name) {
 	try {
 		const queryString = `
