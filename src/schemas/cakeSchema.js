@@ -1,12 +1,10 @@
 import joi from "joi";
 
 const createCakeSchema = joi.object({
-	name: joi.string().required(),
-	price: joi.integer().required(),
-	description: joi.string().required(),
+	name: joi.string().min(2).required(),
+	price: joi.number().min(1).required(),
+	description: joi.string().min(0),
 	image: joi.string().required(),
 });
 
-export default {
-	createCakeSchema,
-};
+export default createCakeSchema;

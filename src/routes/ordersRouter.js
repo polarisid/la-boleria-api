@@ -2,7 +2,7 @@ import { Router } from "express";
 
 const ordersRouter = Router();
 
-ordersRouter.get("/", (req, res) => {
+ordersRouter.post("/order", (req, res) => {
 	try {
 		res.send("alive");
 	} catch (e) {

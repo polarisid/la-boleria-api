@@ -5,7 +5,7 @@ CREATE TABLE "cakes" (
     "name" VARCHAR(255) NOT NULL,
     "image" VARCHAR(255) NOT NULL,
     "description" TEXT NOT NULL,
-    "price" INTEGER NOT NULL
+    "price" NUMERIC NOT NULL
 );
 
 CREATE TABLE "clients" (
@@ -21,5 +21,5 @@ CREATE TABLE "orders" (
 	"cakeId" INTEGER NOT NULL REFERENCES "cakes"("id"),
     "quantity" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	"totalPrice" INTEGER NOT NULL
+	"totalPrice"  NUMERIC NOT NULL
 );
