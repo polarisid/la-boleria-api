@@ -9,29 +9,31 @@ async function createOrder(req, res) {
 		const existingCake = await cakesRepository.searchById(res.locals.cakeId);
 
 		if (existingCake.rowCount === 0 || existingClient.rowCount === 0) {
-			res.status(404).send("Client or cake not found");
-			return;
+			return res.status(404).send("Client or cake not found");
 		}
 
 		console.log(res.locals);
 
 		await ordersRepository.insert(res.locals);
-		res.sendStatus(201);
+		return res.sendStatus(201);
 	} catch (e) {
 		console.log(e);
-		res.sendStatus(500);
-		return;
+		return res.sendStatus(500);
 	}
 }
 
 async function getAllOrders(req, res) {
 	try {
+		const queryString = req.query.date;
+		if (queryString) {
+			const orders = await ordersRepository.getAllByDate(queryString);
+			return res.json(orders.rows);
+		}
 		const orders = await ordersRepository.getAll();
-		res.send(orders.rows);
+		return res.json(orders.rows);
 	} catch (e) {
 		console.log(e);
-		res.send(500);
-		return;
+		return res.sendStatus(500);
 	}
 }
 

@@ -47,7 +47,41 @@ async function getAll() {
 		throw e;
 	}
 }
+async function getAllByDate(date) {
+	const dateIn = date + " 00:00:00.000";
+	const dateOut = date + " 23:59:59.599";
+	try {
+		const queryString = `
+		select
+			json_build_object('id',c.id,'name',c.name,'address',c.address,'phone',c.phone) as client,
+			json_build_object('id',ca.id,'name',ca.name,'price',ca.price,'description', ca.description, 'image',ca.image) as cake,
+			orders."createdAt",
+			orders.quantity,
+			orders."totalPrice",
+			orders.id
+		from
+        	"orders"
+		join "clients" c 
+			on  orders."clientId" =c.id 
+		join "cakes" ca
+			on orders."cakeId" = ca.id
+		where 
+			orders."createdAt" >=($1)
+			AND
+			orders."createdAt"<=($2)
+		;
+		`;
+		const queryArgs = [dateIn, dateOut];
+
+		const result = await db.query(queryString, queryArgs);
+		return result;
+	} catch (e) {
+		console.log(e);
+		throw e;
+	}
+}
 export const ordersRepository = {
 	insert,
 	getAll,
+	getAllByDate,
 };
